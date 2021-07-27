@@ -5,8 +5,6 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import io.realm.Realm
-import io.realm.RealmQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -24,41 +22,22 @@ class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
         Log.d("TAGG", "INSIDE SYNC SCHEDULER:" + System.currentTimeMillis())
         return withContext(Dispatchers.IO){
 
-
-
             //init db instance
             val diffDbDao = DiffDatabase.getInstance(applicationContext).dao
             // fetch completed task by NDK
             val completedTask = diffDbDao.getRecordsByStatus(DBConstants.STATUS_COMPLETED)
             Log.d("TAGG", "INSIDE SYNC SCHEDULER TOTAL COMPLETED:${completedTask.size}")
-/*
-
-            val realm = Realm.getDefaultInstance()
-            if (!realm.isInTransaction)
-                realm.beginTransaction()
-
-            for (diffDb in completedTask){
-                //insert payload in local DB i.e Realm
-                parsePayload(diffDb,realm)
-                //delete completed task/payload from Diff DB
-                diffDbDao.delete(diffDb.id)
-            }
-
-            if (realm.isInTransaction)
-                realm.commitTransaction()
-
-*/
-
-
-
 
             return@withContext Result.Success()
         }
     }
+/*
 
-    /**
+    */
+/**
      * To parse payload and save json object in local Database
-     */
+     *//*
+
     private fun parsePayload(diffDb: DiffDb, realm: Realm) {
 
         //query to access record
@@ -89,6 +68,7 @@ class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
 
 
     }
+*/
 
 
 }

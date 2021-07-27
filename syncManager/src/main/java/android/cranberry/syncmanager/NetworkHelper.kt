@@ -26,11 +26,11 @@ object NetworkHelper {
         isJsonObjectRequest: Boolean,
         networkCallback: NetworkCallback
     ) {
-        var priorityToSet: Priority = when (priority) {
-            Priority.HIGH -> Priority.HIGH
-            Priority.MEDIUM -> Priority.MEDIUM
-            Priority.LOW -> Priority.LOW
-            Priority.IMMEDIATE -> Priority.IMMEDIATE
+        var priorityToSet: com.androidnetworking.common.Priority = when (priority) {
+            Priority.HIGH -> com.androidnetworking.common.Priority.HIGH
+            Priority.MEDIUM -> com.androidnetworking.common.Priority.MEDIUM
+            Priority.LOW -> com.androidnetworking.common.Priority.LOW
+            Priority.IMMEDIATE -> com.androidnetworking.common.Priority.IMMEDIATE
         }
 
         val request = AndroidNetworking.get(url)
@@ -72,11 +72,11 @@ object NetworkHelper {
         isJsonObjectRequest: Boolean,
         networkCallback: NetworkCallback
     ) {
-        var priorityToSet: Priority = when (priority) {
-            Priority.HIGH -> Priority.HIGH
-            Priority.MEDIUM -> Priority.MEDIUM
-            Priority.LOW -> Priority.LOW
-            Priority.IMMEDIATE -> Priority.IMMEDIATE
+        var priorityToSet: com.androidnetworking.common.Priority = when (priority) {
+            Priority.HIGH -> com.androidnetworking.common.Priority.HIGH
+            Priority.MEDIUM -> com.androidnetworking.common.Priority.MEDIUM
+            Priority.LOW -> com.androidnetworking.common.Priority.LOW
+            Priority.IMMEDIATE -> com.androidnetworking.common.Priority.IMMEDIATE
         }
 
         var request = AndroidNetworking.post(url)
