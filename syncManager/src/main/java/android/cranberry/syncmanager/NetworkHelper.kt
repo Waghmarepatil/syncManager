@@ -1,7 +1,6 @@
-package android.cranberry.networksynclibrary
+package android.cranberry.syncmanager
 
 import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.JSONObjectRequestListener
@@ -23,15 +22,15 @@ object NetworkHelper {
 
     fun get(
         url: String, pathParameter: Map<String, String>?, queryParameter: Map<String, String>?,
-        headers: Map<String, String>, tag: String, priority: android.cranberry.networksynclibrary.Priority,
+        headers: Map<String, String>, tag: String, priority: Priority,
         isJsonObjectRequest: Boolean,
         networkCallback: NetworkCallback
     ) {
         var priorityToSet: Priority = when (priority) {
-            android.cranberry.networksynclibrary.Priority.HIGH -> Priority.HIGH
-            android.cranberry.networksynclibrary.Priority.MEDIUM -> Priority.MEDIUM
-            android.cranberry.networksynclibrary.Priority.LOW -> Priority.LOW
-            android.cranberry.networksynclibrary.Priority.IMMEDIATE -> Priority.IMMEDIATE
+            Priority.HIGH -> Priority.HIGH
+            Priority.MEDIUM -> Priority.MEDIUM
+            Priority.LOW -> Priority.LOW
+            Priority.IMMEDIATE -> Priority.IMMEDIATE
         }
 
         val request = AndroidNetworking.get(url)
@@ -69,15 +68,15 @@ object NetworkHelper {
     fun post(
         url: String, headers: Map<String, String>?, tag: String,
         bodyParam: Any,
-        priority: android.cranberry.networksynclibrary.Priority,
+        priority: Priority,
         isJsonObjectRequest: Boolean,
         networkCallback: NetworkCallback
     ) {
         var priorityToSet: Priority = when (priority) {
-            android.cranberry.networksynclibrary.Priority.HIGH -> Priority.HIGH
-            android.cranberry.networksynclibrary.Priority.MEDIUM -> Priority.MEDIUM
-            android.cranberry.networksynclibrary.Priority.LOW -> Priority.LOW
-            android.cranberry.networksynclibrary.Priority.IMMEDIATE -> Priority.IMMEDIATE
+            Priority.HIGH -> Priority.HIGH
+            Priority.MEDIUM -> Priority.MEDIUM
+            Priority.LOW -> Priority.LOW
+            Priority.IMMEDIATE -> Priority.IMMEDIATE
         }
 
         var request = AndroidNetworking.post(url)

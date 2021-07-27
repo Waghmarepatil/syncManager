@@ -1,4 +1,4 @@
-package android.cranberry.networksynclibrary
+package android.cranberry.syncmanager
 
 import android.content.Context
 import android.util.Log

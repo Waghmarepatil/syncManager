@@ -1,4 +1,4 @@
-package android.cranberry.networksynclibrary
+package android.cranberry.syncmanager
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

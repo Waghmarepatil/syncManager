@@ -1,4 +1,4 @@
-package android.cranberry.networksynclibrary
+package android.cranberry.syncmanager
 
 /**
  * @Author: Pramod Jyotiram Waghmare

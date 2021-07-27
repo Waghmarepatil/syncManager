@@ -1,4 +1,4 @@
-package android.cranberry.networksynclibrary
+package android.cranberry.syncmanager
 
 import androidx.room.Dao
 import androidx.room.Insert

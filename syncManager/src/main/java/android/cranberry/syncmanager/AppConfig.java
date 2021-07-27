@@ -1,4 +1,4 @@
-package android.cranberry.networksynclibrary;
+package android.cranberry.syncmanager;
 
 import android.app.Application;
 
