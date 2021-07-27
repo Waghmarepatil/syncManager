@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.cranberry.networksync">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application android:name=".AppConfig"/>
 </manifest>
