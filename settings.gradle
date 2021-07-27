@@ -1,0 +1,3 @@
+include ':networkSync'
+include ':app'
+rootProject.name = "NetworkSyncLibrary"
