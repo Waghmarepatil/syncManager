@@ -7,7 +7,10 @@ package android.cranberry.syncmanager
  */
 object DBConstants {
 
+    // This is declared to identify the Work Manager throught Tag
     const val SCHEDULER_TASK_TAG = "myWorkManager"
+    
+    // This is the default interval set to trigger the work manager tasks or cron.
     const val INTERVAL = 15
 
     const val COMMAND_INSERT = "insert"
