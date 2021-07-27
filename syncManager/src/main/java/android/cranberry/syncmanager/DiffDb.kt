@@ -16,6 +16,8 @@ data class DiffDb(
     @ColumnInfo(name = "table") var table: String?,
     @ColumnInfo(name = "field") var field: String?,
     @ColumnInfo(name = "status") var status: Char?,
+    
+    // TODO: This can be converted to Byte or may be Int 0/1 value.
     @ColumnInfo(name = "keepOffline", defaultValue = false.toString()) var keepOffline: Boolean?,
     @ColumnInfo(name = "priority") var priority: Byte?,
     @ColumnInfo(name = "payload") var payload: String,
