@@ -33,7 +33,7 @@ object WorkManagerScheduler {
 
         val refreshCpnWork = PeriodicWorkRequest.Builder(
             SyncScheduleWorker::class.java,
-            repeatInterval, TimeUnit.MINUTES) // repeat interval
+            repeatInterval.toLong(), TimeUnit.MINUTES) // repeat interval
             .setInitialDelay(5, TimeUnit.MINUTES) // initial delay
             .setConstraints(myConstraints) // apply constraints
             .addTag(DBConstants.SCHEDULER_TASK_TAG) // tag to uniquely identify task in future
