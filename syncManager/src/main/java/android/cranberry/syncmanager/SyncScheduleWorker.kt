@@ -7,7 +7,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 /**
  * @Author: Pramod Jyotiram Waghmare
@@ -15,26 +14,22 @@ import org.json.JSONObject
  * @Date: 26/7/21
  */
 @SuppressLint("RestrictedApi")
-class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
+internal class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
-        Log.d("TAGG", "INSIDE SYNC SCHEDULER:" + System.currentTimeMillis())
         return withContext(Dispatchers.IO){
 
             //init db instance
-            val diffDbDao = DiffDatabase.getInstance(applicationContext).dao
+            val diffDbDao = SyncDatabase.getInstance(applicationContext).dao
             // fetch completed task by NDK
-            val completedTask = diffDbDao.getRecordsByStatus(DBConstants.STATUS_COMPLETED)
-            Log.d("TAGG", "INSIDE SYNC SCHEDULER TOTAL COMPLETED:${completedTask.size}")
+            val completedTask = diffDbDao.getRecordsByStatus(DBConstants.STATUS_APPROVED)
 
             return@withContext Result.Success()
         }
     }
-/*
 
-    */
-/**
+    /**
      * To parse payload and save json object in local Database
      *//*
 

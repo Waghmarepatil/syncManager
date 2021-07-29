@@ -21,7 +21,6 @@ class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
-        Log.d("TAGG", "INSIDE SYNC SCHEDULER:" + System.currentTimeMillis())
         return withContext(Dispatchers.IO){
 
 
@@ -30,7 +29,6 @@ class SyncScheduleWorker(context: Context, workerParams: WorkerParameters) :
             val diffDbDao = DiffDatabase.getInstance(applicationContext).dao
             // fetch completed task by NDK
             val completedTask = diffDbDao.getRecordsByStatus(DBConstants.STATUS_COMPLETED)
-            Log.d("TAGG", "INSIDE SYNC SCHEDULER TOTAL COMPLETED:${completedTask.size}")
 /*
 
             val realm = Realm.getDefaultInstance()

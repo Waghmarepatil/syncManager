@@ -7,21 +7,26 @@ package android.cranberry.syncmanager
  */
 object DBConstants {
 
+    //tag for work manager for identify and extract for future use
     const val SCHEDULER_TASK_TAG = "myWorkManager"
-    const val INTERVAL = 15
+    const val INTERVAL = 15 // default repeat interval time in MINUTE
 
-    const val COMMAND_INSERT = "insert"
-    const val COMMAND_UPDATE = "update"
-    const val COMMAND_DELETE = "delete"
+    const val COMMAND_INSERT = "insert" // command insert to identify the record type
+    const val COMMAND_UPDATE = "update" // command update to identify the record type
+    const val COMMAND_DELETE = "delete" // command delete to identify the record type
 
-    const val TABLE_USER = "user"
+    const val TABLE_USER = "user" // table name to identify the action on which table
 
-    const val TABLE_USER_FIELD_NAME = "name"
+    //record status used to identify the record completion status
+    //ie if added initially by user the its 'p'
+    //when api called with records then marked as 'a' if approved by server 'r' if rejected by server
+    const val STATUS_PENDING = 'p' // record status pending
+    const val STATUS_APPROVED = 'a' // record status approved
+    const val STATUS_REJECTED = 'r' // record status rejected
 
-    const val STATUS_PENDING = 'p'
-    const val STATUS_COMPLETED = 'c'
-
-    const val PRIORITY_HIGH = 1
-    const val PRIORITY_MEDIUM = 2
-    const val PRIORITY_LOW = 3
+    // record priority to identify which record have which priority
+    //according to priority the api will take care which record should execute first
+    const val PRIORITY_HIGH = 1 // priority high
+    const val PRIORITY_MEDIUM = 2 // priority medium
+    const val PRIORITY_LOW = 3 // priority low
 }

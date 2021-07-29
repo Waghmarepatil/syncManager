@@ -13,11 +13,11 @@ import org.json.JSONObject
  * @Company: Cranberry Analytics Pvt. Ltd.
  * @Date: 27/7/21
  */
-object NetworkHelper {
+internal class NetworkHelper {
 
     interface NetworkCallback {
         fun onResponse(response: Any)
-        fun onError(error: ANError)
+        fun onError(errorCode: Int, errorMessage: String?)
     }
 
     fun get(
@@ -47,7 +47,7 @@ object NetworkHelper {
                     }
 
                     override fun onError(anError: ANError) {
-                        networkCallback.onError(anError)
+                        networkCallback.onError(anError.errorCode, anError.message)
                     }
                 })
             }else{
@@ -57,7 +57,7 @@ object NetworkHelper {
                     }
 
                     override fun onError(anError: ANError) {
-                        networkCallback.onError(anError)
+                        networkCallback.onError(anError.errorCode, anError.message)
                     }
 
                 })
@@ -98,7 +98,7 @@ object NetworkHelper {
                 }
 
                 override fun onError(anError: ANError) {
-                    networkCallback.onError(anError)
+                    networkCallback.onError(anError.errorCode, anError.message)
                 }
             })
         }else{
@@ -109,7 +109,7 @@ object NetworkHelper {
                 }
 
                 override fun onError(anError: ANError) {
-                    networkCallback.onError(anError)
+                    networkCallback.onError(anError.errorCode, anError.message)
                 }
 
             })

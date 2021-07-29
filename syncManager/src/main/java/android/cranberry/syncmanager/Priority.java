@@ -5,7 +5,7 @@ package android.cranberry.syncmanager;
  * @Company: Cranberry Analytics Pvt. Ltd.
  * @Date: 27/7/21
  */
-public enum Priority {
+enum Priority {
     /**
      * NOTE: DO NOT CHANGE ORDERING OF THOSE CONSTANTS UNDER ANY CIRCUMSTANCES.
      * Doing so will make ordering incorrect.

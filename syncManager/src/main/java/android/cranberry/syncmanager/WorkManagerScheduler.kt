@@ -11,12 +11,11 @@ import java.util.concurrent.TimeUnit
  * @Company: Cranberry Analytics Pvt. Ltd.
  * @Date: 26/7/21
  */
-object WorkManagerScheduler {
+internal class WorkManagerScheduler {
     /**
      * To schedule the sync
      */
     fun refreshPeriodicWork(context: Context, repeatInterval: Byte) {
-        Log.d("TAGG","INSIDE TO SCHEDULER:")
         val wm = WorkManager.getInstance(context.applicationContext)
         val future = wm.getWorkInfosByTag(DBConstants.SCHEDULER_TASK_TAG)
         val list = future.get()
