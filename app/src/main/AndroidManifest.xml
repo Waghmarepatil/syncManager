@@ -3,6 +3,7 @@
     package="android.cranberry.networksynclibrary">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -11,13 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".SyncDatabases"
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity android:name="android.recon.syncmanager.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

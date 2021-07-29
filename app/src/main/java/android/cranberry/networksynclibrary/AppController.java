@@ -1,7 +1,7 @@
 package android.cranberry.networksynclibrary;
 
 import android.app.Application;
-import android.cranberry.syncmanager.SyncManager;
+import android.cranberry.syncmanager.syncmanager.SyncManager;
 
 /**
  * @Author: Pramod Jyotiram Waghmare

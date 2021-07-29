@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
+        applicationId "android.cranberry.syncmanager"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -38,6 +38,9 @@ dependencies {
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(path: ':syncManager')
+
+    implementation("androidx.work:work-runtime-ktx:2.5.0")
+    api 'com.amitshekhar.android:android-networking:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

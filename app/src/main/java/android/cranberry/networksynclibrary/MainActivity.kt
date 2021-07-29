@@ -4,18 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.cranberry.networksynclibrary.R
-import android.cranberry.syncmanager.*
+import android.cranberry.networksynclibrary.UUIDGenerator
+import android.cranberry.syncmanager.diff_database.DBConstants
+import android.cranberry.syncmanager.syncmanager.SyncManager
 
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
+import java.util.logging.Logger
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,41 +41,36 @@ class MainActivity : AppCompatActivity() {
             markAsCompleteTask()
         }
 
+        btnUpdate.setOnClickListener {
+            updateRecords()
+        }
+
+        btnDelete.setOnClickListener {
+            deleteRecords()
+        }
+
         scheduleWorker()
 
         testApi()
 
     }
 
+    private fun deleteRecords() {
+        Thread{
+            SyncManager.syncManager!!.addToBeSyncDataEntry(DBConstants.COMMAND_DELETE,
+                DBConstants.TABLE_USER,"{\"name\":\"Pramod DADA\",\"id\":\"8e9f1357-0a4a-412b-b1fb-91394bb98872\"}",DBConstants.PRIORITY_HIGH.toByte())
+        }.start()
+    }
+
+    private fun updateRecords() {
+        Thread{
+            SyncManager.syncManager!!.addToBeSyncDataEntry(DBConstants.COMMAND_UPDATE,
+            DBConstants.TABLE_USER,"{\"name\":\"Pramod DADA\",\"id\":\"8e9f1357-0a4a-412b-b1fb-91394bb98872\"}",DBConstants.PRIORITY_HIGH.toByte())
+        }.start()
+    }
+
     @SuppressLint("HardwareIds")
     private fun testApi() {
-/*
-        val headers = HashMap<String, String>()
-        headers.put("Authorization", "abc")
-        headers.put("version", "4.0.2")
-        headers.put("imei", Settings.Secure.getString(this.contentResolver,Settings.Secure.ANDROID_ID))
-
-        NetworkHelper.get(
-            "http://142.93.216.204:12025/meter/get_status",
-            tag = "test",
-            priority = Priority.HIGH,
-            networkCallback = object : NetworkHelper.NetworkCallback {
-                override fun onResponse(response: Any) {
-                    when (response){
-                        is JSONObject -> Log.d("TAGGG", "API CALL GOT RESPONSE:$response")
-                        is JSONArray -> Log.d("TAGGG", "API CALL GOT RESPONSE1:$response")
-                        else -> Log.d("TAGGG", "API CALL GOT RESPONSE3:$response")
-                    }
-
-                }
-
-                override fun onError(errorCode: Int, errorMessage: String?) {
-                    Log.d("TAGGG", "API CALL GOT RESPONSE:" + errorCode+" Message:"+errorMessage)
-                }
-
-            },
-            headers = headers, isJsonObjectRequest = false, pathParameter = null, queryParameter = null
-        )*/
     }
 
     private fun markAsCompleteTask() {
@@ -87,7 +84,8 @@ class MainActivity : AppCompatActivity() {
      * To schedule the scheduler to work as background service
      */
     private fun scheduleWorker() {
-        SyncManager.syncManager!!.scheduleWorker(15)
+        SyncManager.syncManager!!.scheduleWorker(15,true)
+        SyncManager.syncManager!!.syncDB()
     }
 
     /**
@@ -130,16 +128,17 @@ class MainActivity : AppCompatActivity() {
                     "${SyncManager.syncManager!!.getUnSyncedRecords().size}" + "\n"
             val totalCompletedRecords = "Total Completed records in DB: " +
                     "${SyncManager.syncManager!!.getSyncedRecords().size}" + "\n"
+
+            val totalInRealm = "Total objects in realm: "+SyncManager.syncManager!!.getUserCount()
+            val records = SyncManager.syncManager!!.getAllRecords()
+            for (element in records){
+                android.cranberry.networksynclibrary.Logger.log("RECORD:${element.toString()}")
+            }
             runOnUiThread {
                 txtDataFromDB.text = txtDataFromDB.text.toString() +"\n" +
-                        totalRecords+ totalPendingRecords + totalCompletedRecords
+                        totalRecords+ totalPendingRecords + totalCompletedRecords + totalInRealm
             }
         }.start()
-/*
-        val realm = Realm.getDefaultInstance()
-        val query: RealmQuery<Users> = realm.where(Users::class.java)
-        txtDataFromDB.text = txtDataFromDB.text.toString() + "IN REALM TOTAL: ${query.count()}"*/
-
     }
 
     fun addDataInDB() {
@@ -147,9 +146,16 @@ class MainActivity : AppCompatActivity() {
             val payload = JSONObject()
             payload.put("name","Pramod")
             payload.put("age",27)
-            SyncManager.syncManager!!.addToBeSyncDataEntry(DBConstants.COMMAND_INSERT,
-            DBConstants.TABLE_USER,payload.toString(),DBConstants.PRIORITY_HIGH.toByte())
+            payload.put("id",UUIDGenerator.randomUUID(5))
+            SyncManager.syncManager!!.addToBeSyncDataEntry(
+                DBConstants.COMMAND_INSERT,
+            DBConstants.TABLE_USER,payload.toString(), DBConstants.PRIORITY_HIGH.toByte())
         }.start()
 
+        android.cranberry.networksynclibrary.Logger.log("ADDED IN DB")
+
     }
+
+
+
 }
