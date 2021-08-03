@@ -1,7 +1,7 @@
 package android.cranberry.syncmanager.syncmanager
 
 import android.content.Context
-import android.cranberry.syncmanager.diff_database.DBConstants
+import android.cranberry.syncmanager.changelog.DBConstants
 import androidx.work.*
 import java.util.concurrent.TimeUnit
 
@@ -48,13 +48,13 @@ internal class WorkManagerScheduler {
     /**
      * To sync diff db into realm
      */
-    fun setDiffDbSyncer(isToReplace: Boolean, context: Context){
+    fun scheduleChangeLogSyncer(isToReplace: Boolean, context: Context){
         //define constraints
         val myConstraints = Constraints.Builder()
             .build()
 
         val refreshCpnWork = OneTimeWorkRequest.Builder(
-            SyncDiffrentiateDBToLocalDB::class.java)
+            SyncChangeLogDBToMasterDB::class.java)
             //.setInitialDelay(5, TimeUnit.MINUTES) // initial delay
             .setConstraints(myConstraints) // apply constraints
             .addTag(DBConstants.SCHEDULER_TASK_TAG) // tag to uniquely identify task in future
@@ -65,6 +65,25 @@ internal class WorkManagerScheduler {
             DBConstants.SCHEDULER_TASK_TAG,
             policy, refreshCpnWork).enqueue()
 
+    }
+
+
+    fun executeInstantSync(isToReplace: Boolean, context: Context){
+        //define constraints
+        val myConstraints = Constraints.Builder()
+            .build()
+
+        val refreshCpnWork = OneTimeWorkRequest.Builder(
+            SyncScheduleWorker::class.java)
+            //.setInitialDelay(5, TimeUnit.MINUTES) // initial delay
+            .setConstraints(myConstraints) // apply constraints
+            .addTag(DBConstants.SCHEDULER_TASK_TAG) // tag to uniquely identify task in future
+            .build()
+
+        val policy = if(isToReplace) ExistingWorkPolicy.REPLACE else ExistingWorkPolicy.KEEP
+        WorkManager.getInstance(context).beginUniqueWork(
+            DBConstants.SCHEDULER_TASK_TAG,
+            policy, refreshCpnWork).enqueue()
     }
 
 }

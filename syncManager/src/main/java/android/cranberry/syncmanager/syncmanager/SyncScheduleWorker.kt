@@ -2,8 +2,8 @@ package android.cranberry.syncmanager.syncmanager
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.cranberry.syncmanager.diff_database.DBConstants
-import android.cranberry.syncmanager.diff_database.SyncDatabase
+import android.cranberry.syncmanager.changelog.DBConstants
+import android.cranberry.syncmanager.changelog.SyncDatabase
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +31,7 @@ internal class SyncScheduleWorker(context: Context, workerParams: WorkerParamete
                 diffDbDao.markAsRecordSynced(element.id, DBConstants.STATUS_APPROVED,true)
             }
 
-            WorkManagerScheduler().setDiffDbSyncer(true,applicationContext)
+            WorkManagerScheduler().scheduleChangeLogSyncer(true,applicationContext)
 
             return@withContext Result.Success()
         }

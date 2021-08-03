@@ -1,4 +1,4 @@
-package android.cranberry.syncmanager.diff_database
+package android.cranberry.syncmanager.changelog
 
 /**
  * @Author: Pramod Jyotiram Waghmare

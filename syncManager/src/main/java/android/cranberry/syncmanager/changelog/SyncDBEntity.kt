@@ -1,4 +1,4 @@
-package android.cranberry.syncmanager.diff_database
+package android.cranberry.syncmanager.changelog
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

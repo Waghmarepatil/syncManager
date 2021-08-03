@@ -1,9 +1,6 @@
 package android.cranberry.syncmanager.utility
 
-import android.cranberry.syncmanager.mobile_database.Users
-import android.cranberry.syncmanager.parser.UsersParser
 import com.google.gson.*
-import io.realm.RealmObject
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import java.lang.Double
@@ -17,29 +14,6 @@ import java.util.*
  */
 internal object Utils {
 
-    /**
-     * To return Gson
-     */
-    fun getGson(): Gson? {
-        try {
-            return GsonBuilder()
-                .serializeNulls()
-                .setExclusionStrategies(object : ExclusionStrategy {
-                    override fun shouldSkipField(f: FieldAttributes): Boolean {
-                        return f.declaringClass == RealmObject::class.java
-                    }
-
-                    override fun shouldSkipClass(clazz: Class<*>?): Boolean {
-                        return false
-                    }
-                })
-                .registerTypeAdapter(Users::class.java, UsersParser())
-                .create()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
 
     /**
      * To parse json and extract value from it

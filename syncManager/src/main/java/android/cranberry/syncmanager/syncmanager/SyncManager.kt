@@ -2,17 +2,11 @@ package android.cranberry.syncmanager.syncmanager
 
 import android.content.Context
 import android.cranberry.syncmanager.network.NetworkHelper
-import android.cranberry.syncmanager.diff_database.DBConstants
-import android.cranberry.syncmanager.diff_database.SyncDBDao
-import android.cranberry.syncmanager.diff_database.SyncDBEntity
-import android.cranberry.syncmanager.diff_database.SyncDatabase
-import android.cranberry.syncmanager.mobile_database.RealmManager
-import androidx.room.migration.Migration
+import android.cranberry.syncmanager.changelog.DBConstants
+import android.cranberry.syncmanager.changelog.SyncDBDao
+import android.cranberry.syncmanager.changelog.SyncDBEntity
+import android.cranberry.syncmanager.changelog.SyncDatabase
 import com.androidnetworking.AndroidNetworking
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.RealmMigration
-import io.realm.DynamicRealm
 
 
 /**
@@ -30,13 +24,6 @@ object SyncManager {
     @Synchronized
     fun getInstance(context: Context): SyncDatabase? {
         if (syncManager == null) {
-            Realm.init(context.applicationContext)
-            val config = RealmConfiguration.Builder()
-                .name("recon.realm")
-                .schemaVersion(1)
-                .migration { _, _, _ -> }
-                .build()
-            Realm.setDefaultConfiguration(config)
             syncManager = SyncManager
             AndroidNetworking.initialize(context.applicationContext)
             SyncManager.context = context
@@ -94,9 +81,9 @@ object SyncManager {
      * To add entry into differentiate database that
      * @param dbEntity: Entry to add
      */
-    fun addToBeSyncDataEntry(
+    fun addRecordInChangeLogDB(
         commandToInsert: String, table: String, field: String,
-        priority: Byte/*, payload: String*/
+        priority: Byte, payload: String
     ) {
         if (checkIfAllInitialized()) {
             val entry1 = SyncDBEntity(
@@ -107,7 +94,7 @@ object SyncManager {
                 DBConstants.STATUS_PENDING,
                 false,
                 priority,
-                /*payload.toString()*/""
+                payload.toString()
             )
             dbHelper.insertRecords(entry1)
         }
@@ -118,7 +105,7 @@ object SyncManager {
      * To delete data entry from differentiate database
      * @param id: primary key of database that data to be deleted
      */
-    fun deleteSyncDataEntry(id: Long) {
+    fun deleteRecordFromChangeLog(id: Long) {
         if (checkIfAllInitialized()) {
             dbHelper.deleteRecord(id)
         }
@@ -128,7 +115,7 @@ object SyncManager {
      * To delete data entry from differentiate database
      * @param ids: primary key of database that data to be deleted
      */
-    fun deleteSyncDataEntry(ids: Array<Long>) {
+    fun deleteRecordFromChangeLog(ids: Array<Long>) {
         if (checkIfAllInitialized()) {
             dbHelper.deleteRecords(ids)
         }
@@ -189,12 +176,58 @@ object SyncManager {
     /**
      * Used to sync differentiated database to mobile database
      */
-    fun syncDB() {
-        WorkManagerScheduler().setDiffDbSyncer(true, context)
+    fun syncChangeLogDBToMaster() {
+        WorkManagerScheduler().scheduleChangeLogSyncer(true, context)
     }
 
-    fun getUserCount(): Byte {
-        return RealmManager.getUserCount(Realm.getDefaultInstance())
+
+    /**
+     * To execute changes
+     */
+    fun executeChanges(){
+
     }
+
+    /**
+     * To encrypt data
+     * @param plainText: Plain text
+     * @return : Cipher text
+     */
+    fun encryptText(plainText: String): String {
+        return ""
+    }
+
+
+    /**
+     * To decrypt data
+     * @param cipher: cipher text
+     * @return : plain text
+     */
+    fun decryptText(cipher: String): String {
+        return ""
+    }
+
+
+
+    /**
+     * To Compress data
+     * @param data: data to compress
+     * @return : Compressed data
+     */
+    fun compressData(data: String): String {
+        return ""
+    }
+
+
+    /**
+     * To De Compress data
+     * @param compressedData: compressed data to de compress
+     * @return : de compressed data
+     */
+    fun deCompressData(compressedData: String): String {
+        return ""
+    }
+
+
 
 }

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.cranberry.networksynclibrary.R
 import android.cranberry.networksynclibrary.UUIDGenerator
-import android.cranberry.syncmanager.diff_database.DBConstants
+import android.cranberry.syncmanager.changelog.DBConstants
 import android.cranberry.syncmanager.syncmanager.SyncManager
 
 import android.os.Build
@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
-import java.util.logging.Logger
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+/*
 
         btnAddToDB.setOnClickListener {
             addDataInDB()
@@ -52,9 +52,11 @@ class MainActivity : AppCompatActivity() {
         scheduleWorker()
 
         testApi()
+*/
 
     }
 
+/*
     private fun deleteRecords() {
         Thread{
             SyncManager.syncManager!!.addToBeSyncDataEntry(DBConstants.COMMAND_DELETE,
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateRecords() {
         Thread{
             SyncManager.syncManager!!.addToBeSyncDataEntry(DBConstants.COMMAND_UPDATE,
-            DBConstants.TABLE_USER,"{\"name\":\"Pramod DADA\",\"id\":\"8e9f1357-0a4a-412b-b1fb-91394bb98872\"}",DBConstants.PRIORITY_HIGH.toByte())
+            DBConstants.TABLE_USER,"{\"name\":\"Pramod DADA 2\",\"id\":\"7594b0ef-4bf9-4355-84df-88dee8ecf49c\"}",DBConstants.PRIORITY_HIGH.toByte())
         }.start()
     }
 
@@ -80,17 +82,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /**
+    */
+/**
      * To schedule the scheduler to work as background service
-     */
+     *//*
+
     private fun scheduleWorker() {
         SyncManager.syncManager!!.scheduleWorker(15,true)
-        SyncManager.syncManager!!.syncDB()
+        SyncManager.syncManager!!.syncChangeLogDBToMaster()
     }
 
-    /**
+    */
+/**
      * return false if in settings "Not optimized" and true if "Optimizing battery use"
-     */
+     *//*
+
     fun isBatteryOptimized(context: Context): Boolean {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         val name = context.packageName
@@ -132,8 +138,14 @@ class MainActivity : AppCompatActivity() {
             val totalInRealm = "Total objects in realm: "+SyncManager.syncManager!!.getUserCount()
             val records = SyncManager.syncManager!!.getAllRecords()
             for (element in records){
-                android.cranberry.networksynclibrary.Logger.log("RECORD:${element.toString()}")
+                android.cranberry.networksynclibrary.Logger.log("RECORD IN DIFF DB:${element.toString()}")
             }
+
+            val usersList = SyncManager.syncManager!!.getUsers()
+            usersList!!.forEach {
+                android.cranberry.networksynclibrary.Logger.log("RECORD IN MOBILE DB:${it.toString()}")
+            }
+
             runOnUiThread {
                 txtDataFromDB.text = txtDataFromDB.text.toString() +"\n" +
                         totalRecords+ totalPendingRecords + totalCompletedRecords + totalInRealm
@@ -156,6 +168,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+*/
 
 
 }

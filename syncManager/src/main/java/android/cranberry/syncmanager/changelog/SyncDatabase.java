@@ -1,4 +1,4 @@
-package android.cranberry.syncmanager.diff_database;
+package android.cranberry.syncmanager.changelog;
 
 import android.content.Context;
 
@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase;
  */
 @Database(entities = SyncDBEntity.class, exportSchema = false, version = 4)
 public abstract class SyncDatabase extends RoomDatabase {
-    public static final String DB_NAME = "diff_db";
+    public static final String DB_NAME = "changelog";
     public static SyncDatabase instance;
 
     public static synchronized SyncDatabase getInstance(Context context) {
